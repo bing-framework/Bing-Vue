@@ -27,6 +27,9 @@ const webpackConfig = merge(commonWebpackConfig, {
         filename: helpers.assetsPath('js/[name].[chunkhash].js'),
         chunkFilename: helpers.assetsPath('js/[id].[chunkhash].js')
     },
+    optimization:{
+
+    },
     plugins: [
         // http://vuejs.github.io/vue-loader/en/workflow/production.html
         new webpack.DefinePlugin({
@@ -54,22 +57,81 @@ const webpackConfig = merge(commonWebpackConfig, {
         // 生成 dist以及index.html。可以通过编辑/index.html自定义输出内容
         // 请参阅：https://github.com/ampedandwired/html-webpack-plugin
         new HtmlWebpackPlugin({
-            filename:process.env.NODE_ENV==='testing'?'index.html':config.build.index,
-            template:'index.html',
-            inject:true,
-            minify:{
-                removeComments:true,
-                collapseWhitespace:true,
-                removeAttributeQuotes:true
+            filename: process.env.NODE_ENV === 'testing' ? 'index.html' : config.build.index,
+            template: 'index.html',
+            inject: true,
+            minify: {
+                removeComments: true,
+                collapseWhitespace: true,
+                removeAttributeQuotes: true
                 // more options:
                 // https://github.com/kangax/html-minifier#options-quick-reference
             },
             // 必须通过CommonChunkPlugin一致地处理多个块
-            chunksSortMode:'dependency'
+            chunksSortMode: 'dependency'
         }),
         // 当模块不变时，保持module.id的稳定
         new webpack.HashedModuleIdsPlugin(),
         // 启用范围提升
-        new webpack.optimize.ModuleConcatenationPlugin(),        
+        new webpack.optimize.ModuleConcatenationPlugin(),
+        // 将 vendor.js 分割成它自己的文件
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'vendor',
+            minChunks(module) {
+                // node_modules 内部的所有必需模块提取到 vendor.js
+                return (
+                    module.resource &&
+                    /\.js$/.test(module.resource) &&
+                    module.resource.indexOf(path.join(__dirname, '../node_modules')
+                    ) === 0
+                )
+            }
+        }),
+        // 将 webpack 运行时和模块清单提取到其自己的文件中，以防止更新应用程序包时更新 vendor 哈希值
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'manifest',
+            minChunks: Infinity
+        }),
+        // 此实例从代码拆分块中提取共享代码块，并将它们捆绑在单独的代码块中，类似于 vendor.js 块
+        // 请参阅: https://webpack.js.org/plugins/commons-chunk-plugin/#extra-async-commons-chunk
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'app',
+            async: 'vendor-async',
+            children: true,
+            minChunks: 3
+        }),
+        // 复制自定义静态资源文件
+        new CopyWebpackPlugin([
+            {
+                from: path.resolve(__dirname, '../static'),
+                to: config.build.assetsSubDirectory,
+                ignore: ['.*']
+            }
+        ])
     ]
 })
+
+if (config.build.productionGzip) {
+    const CompressionWebpackPlugin = require('compression-webpack-plugin')
+
+    webpackConfig.plugins.push(
+        new CompressionWebpackPlugin({
+            asset: '[path].gz[query]',
+            algorithm: 'gzip',
+            test: new RegExp(
+                '\\.(' +
+                config.build.productionGzipExtensions.join('|') +
+                ')$'
+            ),
+            threshold: 10240,
+            minRatio: 0.8
+        })
+    )
+}
+
+if (config.build.bundleAnalyzerReport) {
+    const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+    webpackConfig.plugins.push(new BundleAnalyzerPlugin())
+}
+
+module.exports = webpackConfig

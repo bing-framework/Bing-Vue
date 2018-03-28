@@ -68,23 +68,24 @@ function cssLoaders(options) {
         if (loader) {
             loaders.push({
                 loader: loader + '-loader',
-                options: Object.assign({}.loaderOptions, {
+                options: Object.assign({}, loaderOptions, {
                     sourceMap: options.sourceMap
                 })
             })
         }
+
+        // 指定该选项时提取css（例如：生产环境）
+        if (options.extract) {
+            return ExtractTextPlugin.extract({
+                use: loaders,
+                fallback: 'vue-style-loader'
+            })
+        } else {
+            return ['vue-style-loader'].concat(loaders)
+        }
     }
 
-    // 指定该选项时提取css（例如：生产环境）
-    if (options.extract) {
-        return ExtractTextPlugin.extract({
-            use: loaders,
-            fallback: 'vue-style-loader'
-        })
-    } else {
-        return ['vue-style-loader'].concat(loaders)
-    }
-
+    // https://vue-loader.vuejs.org/en/configurations/extract-css.html
     return {
         css: generateLoaders(),
         postcss: generateLoaders(),

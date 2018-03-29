@@ -26,10 +26,10 @@ const devWebpackConfig = merge(commonWebpackConfig, {
         clientLogLevel: 'warning',
         historyApiFallback: true,
         hot: true,
-        contentBase: false,//由于使用 CopyWebpackPlugin 因此将其设置为false
-        compress: true,
-        host: HOST || config.dev.host,
-        port: PORT || config.dev.port,
+        contentBase: false,// 由于使用 CopyWebpackPlugin 因此将其设置为false
+        compress: true,// 服务器返回浏览器的时候是否启用gzip压缩
+        host: HOST || config.dev.host,// 主机名
+        port: PORT || config.dev.port,// 端口号
         open: config.dev.autoOpenBrowser,
         overlay: config.dev.errorOverlay ? { warnings: false, errors: true } : false,
         publicPath: config.dev.assetsPublicPath,

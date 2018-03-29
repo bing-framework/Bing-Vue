@@ -26,12 +26,12 @@ module.exports = {
         app: './src/main.ts'
     },
     output: {
-        path: config.build.assetsRoot,
+        path: config.build.assetsRoot,// 出口目录，dist文件
         filename: '[name].js',
-        publicPath: process.env.NODE_ENV === 'production' ? config.build.assetsPublicPath : config.dev.assetsPublicPath
+        publicPath: process.env.NODE_ENV === 'production' ? config.build.assetsPublicPath : config.dev.assetsPublicPath,// 处理打包图片路径问题
     },
     resolve: {
-        extensions: ['.ts','.vue', '.js', '.json','.tsx'],
+        extensions: ['.ts', '.vue', '.js', '.json', '.tsx'],
         alias: {
             'vue$': 'vue/dist/vue.esm.js',
             '@': helpers.resolve('src'),
@@ -83,7 +83,7 @@ module.exports = {
                 test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
                 loader: 'url-loader',
                 options: {
-                    limit: 10000,
+                    limit: 10 * 1024,
                     name: helpers.assetsPath('img/[name].[hash:7].[ext]')
                 }
             },
@@ -91,7 +91,7 @@ module.exports = {
                 test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
                 loader: 'url-loader',
                 options: {
-                    limit: 10000,
+                    limit: 10 * 1024,
                     name: helpers.assetsPath('media/[name].[hash:7].[ext]')
                 }
             },
@@ -99,7 +99,7 @@ module.exports = {
                 test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
                 loader: 'url-loader',
                 options: {
-                    limit: 10000,
+                    limit: 10 * 1024,
                     name: helpers.assetsPath('fonts/[name].[hash:7].[ext]')
                 }
             }

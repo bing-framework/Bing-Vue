@@ -11,6 +11,8 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCssPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const WebpackMd5Hash = require('webpack-md5-hash')
+const ProgressBarPlugin = require('progress-bar-webpack-plugin')
+const chalk = require('chalk')
 //const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const env = process.env.NODE_ENV === 'testing' ? require('../config/test.env') : require('../config/prod.env')
@@ -138,7 +140,10 @@ const webpackConfig = merge(commonWebpackConfig, {
         //         ignore: ['.*']
         //     }
         // ]),
-        new WebpackMd5Hash()
+        new WebpackMd5Hash(),
+        new ProgressBarPlugin({
+            format:'    build [:bar] '+chalk.default.green.bold(':percent')+' (:elapsed seconds)'
+        })
     ]
 })
 

@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <transition name="fade">
+      <bi-demo :title="6666" :list="list"></bi-demo>
       <router-view></router-view>
     </transition>
   </div>

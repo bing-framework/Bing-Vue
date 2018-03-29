@@ -1,11 +1,17 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
 
-@Component
+@Component({
+    components:{        
+    }
+})
 export class App extends Vue {
-    protected created() {}
-//   beforeCreate () {
-//     console.log('测试一下')
-//     //this.$store.dispatch('initAuth')
-//   }
+    list:string[]=[]
+
+    protected created() {
+        for(let i=0;i<100;i++){
+            this.list.push('双击666:'+i)
+        }
+        
+    }
 }

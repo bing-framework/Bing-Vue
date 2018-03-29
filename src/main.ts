@@ -4,6 +4,9 @@ import * as ElementUi from 'element-ui'
 import Component from 'vue-class-component'
 
 import App from './pages/App.vue'
+
+import commonComponents from './components'
+
 import routes from './routes'
 import store from './store'
 
@@ -15,6 +18,11 @@ Component.registerHooks([
 
 Vue.use(ElementUi)
 Vue.use(VueRouter)
+
+commonComponents.forEach(x => {
+    console.log(x.name)
+    Vue.component(x.name, x)
+})
 
 // 路由实例
 const router = new VueRouter({

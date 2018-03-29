@@ -12,10 +12,5 @@ export { App as default } from './App'
 
 
 <style lang="scss">
-#app {
-  position: absolute;
-  top: 0px;
-  bottom: 0px;
-  width: 100%;
-}
+@import './App.scss';
 </style>

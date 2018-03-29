@@ -4,6 +4,7 @@ const _root = path.resolve(__dirname, '..')
 const config = require('../config')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const packageConfig = require('../package.json')
+// const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 /**
  * 获取根目录
@@ -95,7 +96,7 @@ function cssLoaders(options) {
             return ExtractTextPlugin.extract({
                 use: loaders,
                 fallback: 'vue-style-loader'
-            })
+            })            
         } else {
             return ['vue-style-loader'].concat(loaders)
         }

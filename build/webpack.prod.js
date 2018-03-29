@@ -11,6 +11,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCssPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const WebpackMd5Hash = require('webpack-md5-hash')
+//const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const env = process.env.NODE_ENV === 'testing' ? require('../config/test.env') : require('../config/prod.env')
 
@@ -21,7 +22,7 @@ const webpackConfig = merge(commonWebpackConfig, {
             sourceMap: config.build.productionSourceMap,
             extract: true,
             usePostCSS: true
-        })
+        })        
     },
     devtool: config.build.productionSourceMap ? config.build.devtool : false,
     output: {
@@ -37,7 +38,13 @@ const webpackConfig = merge(commonWebpackConfig, {
                     chunks: 'all',
                     name: 'vendors',
                     priority: -20
-                }
+                },
+                // styles:{
+                //     test:/\.(css|scss)$/,
+                //     name:'styles',
+                //     chunks:'all',
+                //     enforce:true
+                // }
             }
         },
         runtimeChunk: {

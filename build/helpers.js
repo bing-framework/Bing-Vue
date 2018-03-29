@@ -30,6 +30,14 @@ function isWebpackDevServer() {
 }
 
 /**
+ * 解析路径
+ * @param {*} dir 目录路径
+ */
+function resolve(dir) {
+    return path.join(__dirname, '..', dir)
+}
+
+/**
  * 设置资源路径
  * @param {*} _path 路径
  */
@@ -44,6 +52,7 @@ function assetsPath(_path) {
  */
 function cssLoaders(options) {
     options = options || {}
+
     const cssLoader = {
         loader: 'css-loader',
         options: {
@@ -53,6 +62,13 @@ function cssLoaders(options) {
 
     const postcssLoader = {
         loader: 'postcss-loader',
+        options: {
+            sourceMap: options.sourceMap
+        }
+    }
+
+    const lessLoader = {
+        loader: 'less-loader',
         options: {
             sourceMap: options.sourceMap
         }
@@ -138,6 +154,36 @@ function createNotifierCallback() {
     }
 }
 
+function extractCss(options) {
+    options = options || {}
+
+    const cssLoader = {
+        loader: 'css-loader',
+        options: {
+            minimize: false,
+            sourceMap: options.sourceMap
+        }
+    }
+
+    const postcssLoader = {
+        loader: 'postcss-loader',
+        options: {
+            sourceMap: options.sourceMap
+        }
+    }
+
+    const lessLoader = {
+        loader: 'less-loader',
+        options: {
+            sourceMap: options.sourceMap
+        }
+    }
+
+    const loaders = [cssLoader, postcssLoader, lessLoader]
+
+    return ['vue-style-loader'].concat(loaders)
+}
+
 exports.root = root
 exports.hasProcessFlag = hasProcessFlag
 exports.isWebpackDevServer = isWebpackDevServer
@@ -145,3 +191,5 @@ exports.assetsPath = assetsPath
 exports.cssLoaders = cssLoaders
 exports.styleLoaders = styleLoaders
 exports.createNotifierCallback = createNotifierCallback
+exports.resolve = resolve
+exports.extractCss = extractCss

@@ -1,17 +1,23 @@
 'use strict'
-const helpers = require('./helpers')
+
 const webpack = require('webpack')
-const config = require('../config')
 const merge = require('webpack-merge')
-const commonWebpackConfig = require('./webpack.common')
+const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
 
+const config = require('../config')
+const commonWebpackConfig = require('./webpack.common')
+const helpers = require('./helpers')
+
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
+const url = `http://${HOST}:${PORT}/`
 
 const devWebpackConfig = merge(commonWebpackConfig, {
+    mode: 'development',// Webpack4 属性
     module: {
         rules: helpers.styleLoaders({ sourceMap: config.dev.cssSourceMap, usePostCss: true })
     },
@@ -20,6 +26,7 @@ const devWebpackConfig = merge(commonWebpackConfig, {
         clientLogLevel: 'warning',
         historyApiFallback: true,
         hot: true,
+        contentBase: false,//由于使用 CopyWebpackPlugin 因此将其设置为false
         compress: true,
         host: HOST || config.dev.host,
         port: PORT || config.dev.port,
@@ -39,11 +46,20 @@ const devWebpackConfig = merge(commonWebpackConfig, {
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NamedModulesPlugin(),//HMR 在更新控制台上显示正确的文件名。
         new webpack.NoEmitOnErrorsPlugin(),
+        // https://github.com/ampedandwired/html-webpack-plugin
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: 'index.html',
             inject: true
         }),
+        // // 复制静态资源文件
+        // new CopyWebpackPlugin([
+        //     {
+        //         from: path.resolve(__dirname, '../static'),
+        //         to: config.dev.assetsSubDirectory,
+        //         ignore: ['.*']
+        //     }
+        // ]),
     ]
 })
 

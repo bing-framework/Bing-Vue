@@ -3,7 +3,7 @@ import VueRouter, { RouteConfig, Route, NavigationGuard } from 'vue-router'
 import * as ElementUi from 'element-ui'
 import Component from 'vue-class-component'
 
-import App from './layout/App.vue'
+import App from './pages/App.vue'
 import routes from './routes'
 import store from './store'
 

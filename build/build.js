@@ -1,5 +1,3 @@
-import { or } from 'ip';
-
 'use strict'
 require('./check-versions')()
 

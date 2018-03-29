@@ -7,21 +7,11 @@
 </template>
 
 <script lang="ts">
-
-import Vue from 'vue'
-import Component from 'vue-class-component'
-
-@Component({})
-export default class App extends Vue {
-  beforeCreate () {
-    console.log('测试一下')
-    //this.$store.dispatch('initAuth')
-  }
-}
+export { App as default } from './App'
 </script>
 
-<style lang="scss">
 
+<style lang="scss">
 #app {
   position: absolute;
   top: 0px;

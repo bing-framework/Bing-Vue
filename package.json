@@ -30,6 +30,7 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-stage-2": "^6.24.1",
     "babel-register": "^6.26.0",
+    "babel-runtime": "^6.26.0",
     "chalk": "^2.3.2",
     "compression-webpack-plugin": "^1.1.11",
     "copy-webpack-plugin": "^4.5.1",
@@ -37,9 +38,15 @@
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "file-loader": "^1.1.11",
     "friendly-errors-webpack-plugin": "^1.6.1",
+    "gulp-util": "^3.0.8",
+    "happypack": "^4.0.1",
+    "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.1.0",
+    "less": "^3.0.1",
+    "less-loader": "^4.1.0",
     "node-notifier": "^5.2.1",
     "node-sass": "^4.8.3",
+    "open-browser-webpack-plugin": "^0.0.5",
     "optimize-css-assets-webpack-plugin": "^4.0.0",
     "ora": "^2.0.0",
     "portfinder": "^1.0.13",
@@ -48,6 +55,7 @@
     "sass-loader": "^6.0.7",
     "semver": "^5.5.0",
     "shelljs": "^0.8.1",
+    "style-loader": "^0.20.3",
     "ts-loader": "^4.1.0",
     "tslint": "^5.9.1",
     "tslint-config-standard": "^7.0.0",
@@ -63,6 +71,7 @@
     "webpack-bundle-analyzer": "^2.11.1",
     "webpack-cli": "^2.0.13",
     "webpack-dev-server": "^3.1.1",
+    "webpack-md5-hash": "^0.0.6",
     "webpack-merge": "^4.1.2"
   },
   "dependencies": {
@@ -74,5 +83,9 @@
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1",
     "vuex-router-sync": "^5.0.0"
+  },
+  "engines": {
+    "node": ">= 4.0.0",
+    "npm": ">= 3.0.0"
   }
 }

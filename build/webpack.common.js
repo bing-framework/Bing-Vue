@@ -31,10 +31,11 @@ module.exports = {
         publicPath: process.env.NODE_ENV === 'production' ? config.build.assetsPublicPath : config.dev.assetsPublicPath
     },
     resolve: {
-        extensions: ['.js', '.vue', '.json', '.ts'],
+        extensions: ['.ts','.vue', '.js', '.json','.tsx'],
         alias: {
             'vue$': 'vue/dist/vue.esm.js',
-            '@': resolve('src'),
+            '@': helpers.resolve('src'),
+            '@components': helpers.resolve('src/components')
         }
     },
     module: {
@@ -44,6 +45,18 @@ module.exports = {
                 loader: 'vue-loader',
                 options: vueLoaderConfig
             },
+            // {
+            //     test: /\.ts$/,
+            //     loader: 'ts-loader',
+            //     include: [
+            //         resolve('src'),
+            //         resolve('test'),
+            //     ],
+            //     options: {
+            //         transpileOnly: true,
+            //         appendTsxSuffixTo: [/\.vue$/]
+            //     }
+            // },
             {
                 test: /\.tsx?$/,
                 exclude: /node_modules/,
@@ -63,6 +76,7 @@ module.exports = {
                 include: [
                     resolve('src'),
                     resolve('test'),
+                    resolve('node_modules/webpack-dev-server/client')
                 ]
             },
             {

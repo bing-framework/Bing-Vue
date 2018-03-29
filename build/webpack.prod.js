@@ -22,7 +22,7 @@ const webpackConfig = merge(commonWebpackConfig, {
             sourceMap: config.build.productionSourceMap,
             extract: true,
             usePostCSS: true
-        })        
+        })
     },
     devtool: config.build.productionSourceMap ? config.build.devtool : false,
     output: {
@@ -34,11 +34,20 @@ const webpackConfig = merge(commonWebpackConfig, {
         splitChunks: {
             cacheGroups: {
                 vendors: {
-                    test: /[\\/]node_modules[\\/]/,
-                    chunks: 'all',
-                    name: 'vendors',
-                    priority: -20
+                    test: chunk => (
+                        chunk.resource &&
+                        /\.js$/.test(chunk.resource) &&
+                        /node_modules/.test(chunk.resource)
+                    ),
+                    chunks: 'initial',
+                    name: 'vendors'
                 },
+                'async-vendors': {
+                    test: /[\\/]node_modules[\\/]/,
+                    minChunks: 2,
+                    chunks: 'async',
+                    name: 'async-vendors'
+                }
                 // styles:{
                 //     test:/\.(css|scss)$/,
                 //     name:'styles',
@@ -48,7 +57,7 @@ const webpackConfig = merge(commonWebpackConfig, {
             }
         },
         runtimeChunk: {
-            name:'manifest'
+            name: 'manifest'
         }
     },
     plugins: [

@@ -1,9 +1,6 @@
 <template>
-  <div id="app">
-    <transition name="fade">
-      <bi-demo :title="6666" :list="list"></bi-demo>
-      <router-view></router-view>
-    </transition>
+  <div id="app" v-loading="isShowFullLoading" element-loading-text="加载中">
+    <router-view></router-view>
   </div>
 </template>
 

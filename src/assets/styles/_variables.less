@@ -1,0 +1,11 @@
+//页面宽度
+@base: 1190px;
+
+//多行文本截断
+.lineClamp(@line:1) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: @line;
+    -webkit-box-orient: vertical;
+}

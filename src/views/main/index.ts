@@ -10,15 +10,23 @@ export class Main extends Vue {
     menuList: any = []
     currentMenus: any = []
     currentParentIndex: Number = 0
+    account: any
 
     protected created() {
         console.log('执行 created')
         this.menuList = menuList.menuList
-        console.log(this.menuList)
+        this.account = '超级管理员'
+        this.currentMenus = this.menuList[this.currentParentIndex.toString()].children
+        console.log(this.currentMenus)
     }
 
-    mounted(){
-        this.menuList = menuList.menuList
+    mounted() {
+
         console.log('执行 mounted')
+    }
+
+    public parentMenusClick(index: Number, children: any) {
+        this.currentParentIndex = index
+        this.currentMenus = children
     }
 }

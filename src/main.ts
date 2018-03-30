@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter, { RouteConfig, Route, NavigationGuard } from 'vue-router'
 import * as ElementUi from 'element-ui'
 import Component from 'vue-class-component'
+import { sync } from 'vuex-router-sync'
 
 import App from './pages/App.vue'
 
@@ -9,6 +10,8 @@ import commonComponents from './components'
 
 import routes from './routes'
 import store from './store'
+
+import 'element-ui/lib/theme-chalk/index.css'
 
 Component.registerHooks([
     'beforeRouteEnter',
@@ -20,7 +23,7 @@ Vue.use(ElementUi)
 Vue.use(VueRouter)
 
 commonComponents.forEach(x => {
-    console.log(x.name)
+    console.log('注册组件：' + x.name)
     Vue.component(x.name, x)
 })
 
@@ -42,6 +45,24 @@ const router = new VueRouter({
     routes: [
         ...routes
     ]
+})
+
+sync(store, router)
+
+router.beforeEach((to, from, next) => {
+    // if (to.path === '/login') {
+    //     next()
+    // }else if (!store.getters.authToken || store.getters.authToken === '') {
+    //     next('/login')
+    // } else {
+    //     if (to.fullPath === '/') {
+    //         next('/main')
+    //     }
+    //     else {
+    //         next()
+    //     }
+    // }
+    next()
 })
 
 Vue.config.productionTip = false

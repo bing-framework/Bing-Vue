@@ -1,9 +1,8 @@
 import { Commit } from 'vuex'
 
 import * as types from '../mutationTypes'
-import { IState } from '../common'
 
-interface State extends IState {
+export interface State {
     isShowFullLoading: boolean,
     localLoading: string
 }
@@ -25,8 +24,7 @@ const getters = {
 }
 
 const actions = {
-    showFullLoading(context: { commit: Commit }, isShowFullLoading: boolean) {
-        console.log('输出内容全屏加载')
+    showFullLoading(context: { commit: Commit }, isShowFullLoading: boolean) {        
         context.commit(types.SHOW_FULL_LOADING, isShowFullLoading)
     },
     showLocalLoading(context: { commit: Commit }, localLoading: string) {
